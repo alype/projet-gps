@@ -25,7 +25,7 @@ def extraire_donnees_brutes(lines):
     records = []
 
     for line in lines:
-        # TODO: Mettre en place un bloc try / except (ValueError, IndexError)
+        # Mettre en place un bloc try / except (ValueError, IndexError)
         try:
             champs = next(csv.reader([line]))
 
@@ -63,7 +63,6 @@ def extraire_donnees_brutes(lines):
 def nettoyer_et_dedoublonner(records):
     cleaned = []
     for record in records:
-        # TODO: Vérifier si lat, lon sont des NaN (math.isnan). Si oui, ignorer.
         try:
             lat = float(record["lat"])
             lon = float(record["lon"])
