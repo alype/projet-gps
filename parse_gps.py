@@ -43,9 +43,12 @@ def extraire_donnees_brutes(lines):
                 continue
 
             # Récupère la date et l'heure, en supprimant les microsecondes, et ajoute les valeurs valides à la liste records
+            date = champs[1]
             heure = champs[2].split(".", 1)[0]
+
             records.append({
-                "timestamp": f"{champs[1]} {heure}",
+                "date": date,
+                "heure": heure,
                 "lat": lat,
                 "lon": lon,
             })
@@ -101,12 +104,13 @@ def exporter_et_hasher(cleaned, output_file="output_cleaned.csv"):
         writer = csv.writer(f)
 
         # Ecrit l'en-tête du fichier CSV
-        writer.writerow(["timestamp", "latitude", "longitude"])
+        writer.writerow(["date", "heure", "latitude", "longitude"])
 
         # Ecrit une ligne CSV pour chaque coordonnée nettoyée
         for record in cleaned:
             writer.writerow([
-                record["timestamp"],
+                record["date"],
+                record["heure"],
                 record["lat"],
                 record["lon"],
             ])
