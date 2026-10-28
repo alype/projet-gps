@@ -17,5 +17,5 @@ Si j'ajuste la règle de dédoublonnage à 0.05 degrés de différence, j'obtien
 
 ## Etape 4
 
-[ETAPE 4] SHA-256: 9311433bfced15788ed8de0239d5c9255937aa559d03b391e11730c667d8784c
-[ETAPE 4] FLAG: FLAG_OCLCC_9311433bfced
+[ETAPE 4] SHA-256: 84aa191fd4d6968022cc827bdebe5d2ee2c1a290aed72a16643b68213608911b
+[ETAPE 4] FLAG: FLAG_OCLCC_84aa191fd4d6
