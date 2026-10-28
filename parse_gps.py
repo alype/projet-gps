@@ -1,6 +1,7 @@
 import sys
 import math
 import csv
+import hashlib
 
 input_file = "input_log.txt"
 
@@ -81,8 +82,8 @@ def nettoyer_et_dedoublonner(records):
             if cleaned:
                 dernier = cleaned[-1]
                 if (
-                    abs(record_arrondis["lat"] - dernier["lat"]) <= 1.0
-                    and abs(record_arrondis["lon"] - dernier["lon"]) <= 1.0
+                    abs(record_arrondis["lat"] - dernier["lat"]) <= 0.05
+                    and abs(record_arrondis["lon"] - dernier["lon"]) <= 0.05
                 ):
                     continue
 
@@ -93,12 +94,46 @@ def nettoyer_et_dedoublonner(records):
 
     return cleaned
 
+# Etape 4
+def exporter_et_hasher(cleaned, output_file="output_cleaned.csv"):
+    # Ouvre ou crée le fichier en écriture, avec un encodage utf-8
+    with open(output_file, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+
+        # Ecrit l'en-tête du fichier CSV
+        writer.writerow(["timestamp", "latitude", "longitude"])
+
+        # Ecrit une ligne CSV pour chaque coordonnée nettoyée
+        for record in cleaned:
+            writer.writerow([
+                record["timestamp"],
+                record["lat"],
+                record["lon"],
+            ])
+
+    # Crée un objet pour calculer l'empreinte SHA-256
+    hasher = hashlib.sha256()
+
+    # Rouvre le fichier en mode binaire pour calculer son empreinte
+    with open(output_file, "rb") as f:
+        # Lit le fichier par blocs de 4096 octets
+        for bloc in iter(
+            lambda: f.read(4096), b""
+        ):
+            hasher.update(bloc)
+
+    # Retourne l'empreinte SHA-256 en chaîne hexadécimale
+    return hasher.hexdigest()
+
+
 if __name__ == "__main__":
     lignes = lire_et_filtrer_fichier(input_file)
     records = extraire_donnees_brutes(lignes)
     points_nettoyes = nettoyer_et_dedoublonner(records)
+    sha256_hash = exporter_et_hasher(points_nettoyes)
 
     print(f"[ETAPE 1] Lignes retenues : {len(lignes)}")
     print(f"[ETAPE 2] Enregistrements valides : {len(records)}")
     print(f"[ETAPE 3] Points nettoyés et dédoublonnés: {len(points_nettoyes)}")
-
+    print(f"[ETAPE 4] SHA-256: {sha256_hash}")
+    print(f"[ETAPE 4] FLAG: FLAG_OCLCC_{sha256_hash[:12]}")
