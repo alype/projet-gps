@@ -9,12 +9,12 @@ input_file = "input_log.txt"
 def lire_et_filtrer_fichier(input_file):
     lignes_filtrees = []
 
-    # TODO: Ouvrir le fichier avec l'encodage 'latin-1'
+    # Ouvrir le fichier avec l'encodage 'latin-1'
     with open(input_file, encoding="latin-1") as fichier:
-        # TODO: Parcourir le fichier ligne par ligne
+        # Parcourir le fichier ligne par ligne
         for ligne in fichier:
-            # TODO: Si la ligne contient "GNSS_ACCESS_LIB" ou "Trip Data",
-            # l'ajouter à lines_filtrees (pensez à faire .strip())
+            # Si la ligne contient "GNSS_ACCESS_LIB" ou "Trip Data",
+            # l'ajouter à lines_filtrees 
             if "GNSS_ACCESS_LIB" in ligne or "Trip Data" in ligne:
                 lignes_filtrees.append(ligne.strip())
                 
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     points_nettoyes = nettoyer_et_dedoublonner(records)
     sha256_hash = exporter_et_hasher(points_nettoyes)
 
-    print(f"[ETAPE 1] Lignes retenues : {len(lignes)}")
+    print(f"[ETAPE 1] Lignes retenues : {len(lignes)}")  
     print(f"[ETAPE 2] Enregistrements valides : {len(records)}")
     print(f"[ETAPE 3] Points nettoyés et dédoublonnés: {len(points_nettoyes)}")
     print(f"[ETAPE 4] SHA-256: {sha256_hash}")
