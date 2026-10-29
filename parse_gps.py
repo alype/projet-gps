@@ -80,7 +80,7 @@ def nettoyer_et_dedoublonner(records):
             record_arrondis["lat"] = round(lat, 2)
             record_arrondis["lon"] = round(lon, 2)
 
-            # Ignore le point s'il est à moins de 1° du dernier point validé
+            # Ignore le point s'il est à moins de 0.05° du dernier point validé
             if cleaned:
                 dernier = cleaned[-1]
                 if (
